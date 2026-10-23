@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>ERD - Clinic Database</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #ffffff; }
+    body {
+      width: 1500px;
+      height: 1250px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: #0f172a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .title {
+      position: absolute;
+      left: 40px;
+      top: 22px;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      position: absolute;
+      left: 42px;
+      top: 62px;
+      font-size: 15px;
+      color: #475569;
+    }
+
+    svg.connections {
+      position: absolute;
+      inset: 0;
+      width: 1500px;
+      height: 1250px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .relationship-label {
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      fill: #334155;
+      paint-order: stroke;
+      stroke: #ffffff;
+      stroke-width: 7px;
+      stroke-linejoin: round;
+    }
+
+    .table {
+      position: absolute;
+      z-index: 1;
+      background: #ffffff;
+      border: 2px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+    }
+    .table-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+    .table-header .tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      opacity: 0.85;
+      text-transform: uppercase;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 27px;
+      padding: 4px 12px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 13.5px;
+      line-height: 1.25;
+    }
+    .row:nth-child(even) { background: #f8fafc; }
+    .col-name {
+      font-family: Consolas, "Cascadia Mono", monospace;
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+    .col-type {
+      font-family: Consolas, "Cascadia Mono", monospace;
+      color: #64748b;
+      font-size: 11.5px;
+      white-space: nowrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      margin-left: 4px;
+      vertical-align: 1px;
+    }
+    .pk { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+    .fk { background: #ede9fe; color: #5b21b6; border: 1px solid #8b5cf6; }
+    .uq { background: #dcfce7; color: #166534; border: 1px solid #22c55e; }
+
+    .users .table-header { background: #1d4ed8; }
+    .patients .table-header { background: #047857; }
+    .doctors .table-header { background: #6d28d9; }
+    .appointments .table-header { background: #b45309; }
+    .medical-records .table-header { background: #be123c; }
+    .medicines .table-header { background: #0f766e; }
+    .prescriptions .table-header { background: #c2410c; }
+    .prescription-items .table-header { background: #a21caf; }
+    .audit-logs .table-header { background: #475569; }
+
+    .legend {
+      position: absolute;
+      z-index: 2;
+      left: 40px;
+      top: 1170px;
+      font-size: 13px;
+      color: #475569;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px 12px;
+    }
+    .legend b { color: #0f172a; }
+  </style>
+</head>
+<body>
+  <div class="title">ERD — Clinic Database</div>
+  <div class="subtitle">9 bảng · MySQL 8.0 · database clinic_db · quan hệ khóa ngoại</div>
+
+  <svg class="connections" viewBox="0 0 1500 1250" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8">
+        <circle cx="5" cy="5" r="3.5" fill="#334155"/>
+      </marker>
+    </defs>
+
+    <!-- users 1-1 patients -->
+    <path d="M 250 353 L 250 460" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="250" cy="353" r="4" fill="#334155"/>
+    <circle cx="250" cy="460" r="4" fill="#334155"/>
+    <text x="262" y="412" class="relationship-label">1 : 1</text>
+
+    <!-- users 1-1 doctors -->
+    <path d="M 450 300 L 500 300 L 500 420 L 750 420 L 750 460" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="450" cy="300" r="4" fill="#334155"/>
+    <circle cx="750" cy="460" r="4" fill="#334155"/>
+    <text x="512" y="410" class="relationship-label">1 : 1</text>
+
+    <!-- users 1-N audit_logs -->
+    <path d="M 450 160 L 550 160" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="450" cy="160" r="4" fill="#334155"/>
+    <circle cx="550" cy="160" r="4" fill="#334155"/>
+    <text x="472" y="150" class="relationship-label">1 : N</text>
+
+    <!-- patients 1-N appointments -->
+    <path d="M 250 747 L 250 760 L 1250 760 L 1250 720" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="250" cy="747" r="4" fill="#334155"/>
+    <circle cx="1250" cy="720" r="4" fill="#334155"/>
+    <text x="700" y="752" class="relationship-label">1 : N</text>
+
+    <!-- doctors 1-N appointments -->
+    <path d="M 950 550 L 1050 550" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="950" cy="550" r="4" fill="#334155"/>
+    <circle cx="1050" cy="550" r="4" fill="#334155"/>
+    <text x="974" y="540" class="relationship-label">1 : N</text>
+
+    <!-- appointments 1-1 medical_records -->
+    <path d="M 1250 720 L 1250 790 L 250 790 L 250 820" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="1250" cy="720" r="4" fill="#334155"/>
+    <circle cx="250" cy="820" r="4" fill="#334155"/>
+    <text x="720" y="816" class="relationship-label">1 : 1</text>
+
+    <!-- medical_records 1-1 prescriptions -->
+    <path d="M 450 900 L 550 900" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="450" cy="900" r="4" fill="#334155"/>
+    <circle cx="550" cy="900" r="4" fill="#334155"/>
+    <text x="472" y="890" class="relationship-label">1 : 1</text>
+
+    <!-- prescriptions 1-N prescription_items -->
+    <path d="M 950 880 L 1050 880" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="950" cy="880" r="4" fill="#334155"/>
+    <circle cx="1050" cy="880" r="4" fill="#334155"/>
+    <text x="972" y="870" class="relationship-label">1 : N</text>
+
+    <!-- medicines 1-N prescription_items -->
+    <path d="M 1150 434 L 1150 445 L 1000 445 L 1000 800 L 1250 800 L 1250 820" fill="none" stroke="#334155" stroke-width="2.5"/>
+    <circle cx="1150" cy="434" r="4" fill="#334155"/>
+    <circle cx="1250" cy="820" r="4" fill="#334155"/>
+    <text x="1012" y="610" class="relationship-label">1 : N</text>
+  </svg>
+
+  <!-- users -->
+  <div class="table users" style="left:50px; top:120px; width:400px; height:233px;">
+    <div class="table-header"><span>users</span><span class="tag">tài khoản</span></div>
+    <div class="row"><span class="col-name">user_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">email <span class="badge uq">UQ</span></span><span class="col-type">VARCHAR(255)</span></div>
+    <div class="row"><span class="col-name">password_hash</span><span class="col-type">VARCHAR(255)</span></div>
+    <div class="row"><span class="col-name">role</span><span class="col-type">ENUM</span></div>
+    <div class="row"><span class="col-name">is_active</span><span class="col-type">TINYINT</span></div>
+    <div class="row"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
+    <div class="row"><span class="col-name">updated_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- audit_logs -->
+  <div class="table audit-logs" style="left:550px; top:120px; width:400px; height:260px;">
+    <div class="table-header"><span>audit_logs</span><span class="tag">nhật ký</span></div>
+    <div class="row"><span class="col-name">log_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">user_id <span class="badge fk">FK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">action</span><span class="col-type">VARCHAR(50)</span></div>
+    <div class="row"><span class="col-name">entity</span><span class="col-type">VARCHAR(50)</span></div>
+    <div class="row"><span class="col-name">entity_id</span><span class="col-type">VARCHAR(50)</span></div>
+    <div class="row"><span class="col-name">ip</span><span class="col-type">VARCHAR(45)</span></div>
+    <div class="row"><span class="col-name">result</span><span class="col-type">VARCHAR(20)</span></div>
+    <div class="row"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- medicines -->
+  <div class="table medicines" style="left:1050px; top:120px; width:400px; height:314px;">
+    <div class="table-header"><span>medicines</span><span class="tag">kho thuốc</span></div>
+    <div class="row"><span class="col-name">medicine_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">medicine_code <span class="badge uq">UQ</span></span><span class="col-type">VARCHAR(30)</span></div>
+    <div class="row"><span class="col-name">name</span><span class="col-type">VARCHAR(150)</span></div>
+    <div class="row"><span class="col-name">active_ingredient</span><span class="col-type">VARCHAR(200)</span></div>
+    <div class="row"><span class="col-name">unit</span><span class="col-type">VARCHAR(30)</span></div>
+    <div class="row"><span class="col-name">stock_quantity</span><span class="col-type">INT</span></div>
+    <div class="row"><span class="col-name">is_prescription_only</span><span class="col-type">TINYINT</span></div>
+    <div class="row"><span class="col-name">is_active</span><span class="col-type">TINYINT</span></div>
+    <div class="row"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
+    <div class="row"><span class="col-name">updated_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- patients -->
+  <div class="table patients" style="left:50px; top:460px; width:400px; height:287px;">
+    <div class="table-header"><span>patients</span><span class="tag">bệnh nhân</span></div>
+    <div class="row"><span class="col-name">patient_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">user_id <span class="badge fk">FK</span> <span class="badge uq">UQ</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">full_name</span><span class="col-type">VARCHAR(150)</span></div>
+    <div class="row"><span class="col-name">date_of_birth</span><span class="col-type">DATE</span></div>
+    <div class="row"><span class="col-name">gender</span><span class="col-type">ENUM</span></div>
+    <div class="row"><span class="col-name">phone</span><span class="col-type">VARCHAR(20)</span></div>
+    <div class="row"><span class="col-name">address</span><span class="col-type">TEXT</span></div>
+    <div class="row"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
+    <div class="row"><span class="col-name">updated_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- doctors -->
+  <div class="table doctors" style="left:550px; top:460px; width:400px; height:260px;">
+    <div class="table-header"><span>doctors</span><span class="tag">bác sĩ</span></div>
+    <div class="row"><span class="col-name">doctor_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">user_id <span class="badge fk">FK</span> <span class="badge uq">UQ</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">full_name</span><span class="col-type">VARCHAR(150)</span></div>
+    <div class="row"><span class="col-name">specialty</span><span class="col-type">VARCHAR(100)</span></div>
+    <div class="row"><span class="col-name">license_number <span class="badge uq">UQ</span></span><span class="col-type">VARCHAR(50)</span></div>
+    <div class="row"><span class="col-name">phone</span><span class="col-type">VARCHAR(20)</span></div>
+    <div class="row"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
+    <div class="row"><span class="col-name">updated_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- appointments -->
+  <div class="table appointments" style="left:1050px; top:460px; width:400px; height:260px;">
+    <div class="table-header"><span>appointments</span><span class="tag">lịch hẹn</span></div>
+    <div class="row"><span class="col-name">appointment_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">patient_id <span class="badge fk">FK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">doctor_id <span class="badge fk">FK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">scheduled_at</span><span class="col-type">DATETIME</span></div>
+    <div class="row"><span class="col-name">status</span><span class="col-type">ENUM</span></div>
+    <div class="row"><span class="col-name">reason</span><span class="col-type">TEXT</span></div>
+    <div class="row"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
+    <div class="row"><span class="col-name">updated_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- medical_records -->
+  <div class="table medical-records" style="left:50px; top:820px; width:400px; height:233px;">
+    <div class="table-header"><span>medical_records</span><span class="tag">bệnh án</span></div>
+    <div class="row"><span class="col-name">record_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">appointment_id <span class="badge fk">FK</span> <span class="badge uq">UQ</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">diagnosis</span><span class="col-type">TEXT</span></div>
+    <div class="row"><span class="col-name">treatment</span><span class="col-type">TEXT</span></div>
+    <div class="row"><span class="col-name">notes</span><span class="col-type">TEXT</span></div>
+    <div class="row"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
+    <div class="row"><span class="col-name">updated_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- prescriptions -->
+  <div class="table prescriptions" style="left:550px; top:820px; width:400px; height:152px;">
+    <div class="table-header"><span>prescriptions</span><span class="tag">đơn thuốc</span></div>
+    <div class="row"><span class="col-name">prescription_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">record_id <span class="badge fk">FK</span> <span class="badge uq">UQ</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">note</span><span class="col-type">TEXT</span></div>
+    <div class="row"><span class="col-name">issued_at</span><span class="col-type">TIMESTAMP</span></div>
+  </div>
+
+  <!-- prescription_items -->
+  <div class="table prescription-items" style="left:1050px; top:820px; width:400px; height:314px;">
+    <div class="table-header"><span>prescription_items</span><span class="tag">chi tiết đơn</span></div>
+    <div class="row"><span class="col-name">item_id <span class="badge pk">PK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">prescription_id <span class="badge fk">FK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">medicine_id <span class="badge fk">FK</span></span><span class="col-type">BIGINT</span></div>
+    <div class="row"><span class="col-name">medicine_name</span><span class="col-type">VARCHAR(150)</span></div>
+    <div class="row"><span class="col-name">unit</span><span class="col-type">VARCHAR(30)</span></div>
+    <div class="row"><span class="col-name">dosage</span><span class="col-type">VARCHAR(100)</span></div>
+    <div class="row"><span class="col-name">frequency</span><span class="col-type">VARCHAR(100)</span></div>
+    <div class="row"><span class="col-name">duration_days</span><span class="col-type">SMALLINT</span></div>
+    <div class="row"><span class="col-name">quantity</span><span class="col-type">INT</span></div>
+    <div class="row"><span class="col-name">instruction</span><span class="col-type">VARCHAR(255)</span></div>
+  </div>
+
+  <div class="legend">
+    <b>PK</b> khóa chính · <b>FK</b> khóa ngoại · <b>UQ</b> unique · <b>1:N / 1:1</b> quan hệ
+  </div>
+</body>
+</html>

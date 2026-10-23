@@ -1,0 +1,9 @@
+{
+  "name": "clinic-security-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend đơn giản cho đồ án An ninh CSDL",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "clinic-security-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend API cho đồ án An ninh CSDL - quản lý bệnh nhân và hồ sơ khám",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "check-db": "node scripts/check-db.js",
+    "smoke": "node scripts/smoke-test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.5",
+    "zod": "^3.24.1"
+  }
+}

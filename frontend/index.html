@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clinic Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <section id="login-view" class="login-screen">
+    <div class="login-card">
+      <div class="brand brand-large">
+        <span class="brand-mark">C</span>
+        <div>
+          <strong>Clinic Portal</strong>
+          <small>Đồ án An ninh CSDL</small>
+        </div>
+      </div>
+
+      <h1>Đăng nhập</h1>
+      <p class="muted">Dùng tài khoản demo để xem giao diện theo từng vai trò.</p>
+
+      <form id="login-form" class="form">
+        <div id="login-error" class="form-error" hidden></div>
+
+        <label>
+          Email
+          <input id="login-email" name="email" type="email" autocomplete="username" required>
+        </label>
+
+        <label>
+          Mật khẩu
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+        </label>
+
+        <button id="login-submit" class="btn btn-primary btn-block" type="submit">Đăng nhập</button>
+      </form>
+
+      <div class="demo-logins">
+        <span class="muted">Đăng nhập nhanh:</span>
+        <button type="button" class="btn btn-ghost btn-sm demo-account"
+          data-email="admin@clinic.local" data-password="Admin@123">Admin</button>
+        <button type="button" class="btn btn-ghost btn-sm demo-account"
+          data-email="doctor1@clinic.local" data-password="Doctor@123">Bác sĩ</button>
+        <button type="button" class="btn btn-ghost btn-sm demo-account"
+          data-email="patient1@clinic.local" data-password="Patient@123">Bệnh nhân</button>
+      </div>
+
+      <p class="login-note">
+        API: <span id="api-base-label"></span><br>
+        Dữ liệu trong project là dữ liệu giả lập.
+      </p>
+    </div>
+  </section>
+
+  <div id="app-view" hidden>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">C</span>
+        <div>
+          <strong>Clinic Portal</strong>
+          <small>Quản lý bệnh nhân</small>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="user-meta">
+          <span id="user-name"></span>
+          <span id="user-role" class="role-chip"></span>
+        </div>
+        <button id="logout-btn" class="btn btn-ghost btn-sm" type="button">Đăng xuất</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav id="nav" class="nav"></nav>
+        <div class="sidebar-note">
+          API: <span id="api-base-sidebar"></span>
+        </div>
+      </aside>
+
+      <main id="main-content" class="main-content"></main>
+    </div>
+  </div>
+
+  <div id="modal" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h2 id="modal-title"></h2>
+        <button id="modal-close" class="icon-btn" type="button" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-error" class="form-error" hidden></div>
+        <div id="modal-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+</body>
+</html>
